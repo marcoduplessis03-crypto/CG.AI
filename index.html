@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CG.AI · Local Prototype</title>
+<link rel="stylesheet" href="styles.css">
+<script defer src="audio.js"></script>
+<script defer src="projects.js"></script>
+<script defer src="studio.js"></script>
+<script defer src="app.js"></script>
+</head>
+<body>
+<div id="cg-concepts">
+<div class="cg-app cg-capture" aria-label="CG.AI music studio">
+      <header class="cg-header">
+        <strong class="cg-brand"><span>CG</span> CG.AI</strong>
+        <span class="cg-meta"><span data-song-name>Evening Light</span> <span class="cg-dot">·</span> Local prototype</span>
+        <div class="cg-actions cg-project-tools" role="group" aria-label="Project files">
+          <button type="button" data-action="save-project">Save</button>
+          <button type="button" data-action="save-project-file">Save Locally</button>
+          <button type="button" data-action="open-project">Open Project</button>
+          <input type="file" accept=".cgai,application/json" data-project-file hidden>
+        </div>
+        <span class="cg-sub" data-project-status role="status"></span>
+      </header>
+      <section class="cg-console" aria-label="Studio controls">
+        <div class="cg-actions" aria-label="Arrangement playback">
+          <button class="cg-main" data-action="transport-play">Play</button>
+          <button data-action="transport-pause">Pause</button>
+          <button data-action="transport-stop">Stop</button>
+        </div>
+        <div class="cg-hud" aria-label="Playback position and signal">
+          <span class="cg-hud-position"><small>BAR / BEAT</small><output data-hud-position aria-live="off">01.01</output></span>
+          <span class="cg-hud-tempo"><small>TEMPO</small><output data-hud-tempo>92 <span>BPM</span></output></span>
+          <span class="cg-hud-signal"><small data-hud-state>READY</small><span class="cg-hud-meter" aria-hidden="true"><span></span></span></span>
+        </div>
+        <label class="cg-volume">Master volume <input data-volume type="range" min="0" max="100" value="80"><output data-volume-value>80%</output></label>
+        <button data-action="fullscreen">Full screen</button>
+      </section>
+      <details class="cg-studio-tools">
+        <summary>Studio tools</summary>
+        <label class="cg-part-picker">Tool
+          <select data-studio-tool><option value="drums">Advanced drum pad</option><option value="synth">Synthesizer editor</option><option value="harmony">Harmony generator</option></select>
+        </label>
+        <div data-tool-panel="drums">
+          <div class="cg-actions">
+            <label class="cg-part-picker">Drum <select data-drum-sound></select></label>
+            <label class="cg-part-picker">Bar <select data-drum-bar><option>1</option><option>2</option><option>3</option><option>4</option></select></label>
+            <button data-action="audition-drum">Audition</button>
+            <button data-action="add-drum-track">Add drum track</button>
+          </div>
+          <p class="cg-sub cg-caption" data-drum-hint></p>
+          <div class="cg-drum-steps" data-drum-steps aria-label="Sixteenth-note drum steps"></div>
+        </div>
+        <div class="cg-actions" data-tool-panel="synth" hidden>
+          <label class="cg-part-picker">Waveform <select data-synth-wave></select></label>
+          <label>Attack <input data-synth-attack type="range" min="0" max="250" value="35"> <output data-attack-value>35 ms</output></label>
+          <label>Release <input data-synth-release type="range" min="40" max="100" value="82"> <output data-release-value>82%</output></label>
+          <button data-action="audition-sound">Audition sound</button>
+        </div>
+        <div class="cg-actions" data-tool-panel="harmony" hidden>
+          <label class="cg-part-picker">Interval <select data-harmony-interval><option value="2">Third above</option><option value="-2">Third below</option><option value="4">Fifth above</option><option value="-4">Fifth below</option></select></label>
+          <button data-action="generate-harmony">Generate harmony track</button>
+          <span class="cg-sub">Uses the active melody track.</span>
+        </div>
+      </details>
+      <div class="cg-workspace-shell">
+      <nav class="cg-workspace-nav" aria-label="Workspace" data-steps>
+        <p class="cg-nav-label">Workspace</p>
+        <button data-view="capture" aria-pressed="true"><span aria-hidden="true">●</span> Capture</button>
+        <button data-view="creator" aria-pressed="false"><span aria-hidden="true">✦</span> Create</button>
+        <button data-view="edit" aria-pressed="false"><span aria-hidden="true">▤</span> Piano roll</button>
+        <button data-view="lyrics" aria-pressed="false"><span aria-hidden="true">≡</span> Lyrics</button>
+        <button data-view="producer" aria-pressed="false"><span aria-hidden="true">◇</span> Producer</button>
+        <button data-view="voice" aria-pressed="false"><span aria-hidden="true">∿</span> Voice Studio</button>
+        <button data-view="mixer" aria-pressed="false"><span aria-hidden="true">≋</span> Mixer</button>
+        <p class="cg-nav-label">Project</p>
+        <button data-view="library" aria-pressed="false"><span aria-hidden="true">▥</span> Library</button>
+        <button data-view="score" aria-pressed="false"><span aria-hidden="true">♫</span> Sheet music</button>
+        <button data-view="export" aria-pressed="false"><span aria-hidden="true">⇩</span> Export</button>
+      </nav>
+      <div class="cg-capture-body">
+        <div data-pane="capture" class="cg-take">
+          <div class="cg-capture-intro">
+            <p class="cg-kicker">MICROPHONE CAPTURE</p>
+            <h2>Hum your idea.</h2>
+            <p class="cg-sub">Turn a melody or rhythm into editable notes.</p>
+            <div class="cg-actions"><button class="cg-main" data-action="record">Record melody</button><button data-action="take">Load sample take</button><button data-view="edit">Open piano roll</button></div>
+          </div>
+          <div class="cg-capture-deck">
+            <div class="cg-capture-controls" data-capture-controls></div>
+            <div class="cg-setup" data-sound-setup></div>
+            <label class="cg-switch-row"><input type="checkbox" data-metronome> Recording metronome</label>
+            <div data-waveform></div>
+            <div class="cg-actions"><button data-action="audition-sound">Audition sound</button></div>
+          </div>
+        </div>
+        <div data-pane="edit" hidden>
+          <div class="cg-bar"><h3 data-part>Piano part</h3><button data-action="play">Play track</button></div>
+          <div data-waveform></div>
+          <div class="cg-actions cg-song-sections"><label>Section <select data-section-select></select></label><label>Section name <input data-section-name maxlength="60"></label><button data-action="add-section">Add four bars</button><button data-action="toggle-lock">Lock notes</button><button data-action="undo-edit">Undo</button><button data-action="redo-edit">Redo</button></div>
+          <div class="cg-track-strip" data-track-list aria-label="Piano roll tracks"></div>
+          <div class="cg-note-colors"><span data-selection-count role="status"></span><label class="cg-part-picker">Track colour <input type="color" data-track-color value="#8ed7a5"></label><label class="cg-part-picker">Selected note colour <select data-note-color><option value="">Track colour</option></select></label></div>
+          <div data-roll></div>
+          <div class="cg-actions" data-note-tools></div>
+          <div class="cg-actions"><button class="cg-main" data-view="score">See sheet music</button></div>
+        </div>
+        <div data-pane="score" hidden>
+          <div data-song-title></div>
+          <div class="cg-bar"><h3 data-part>Piano part</h3><button data-action="play">Play track</button></div>
+          <div data-score></div>
+          <div class="cg-actions" data-duration-tools></div>
+          <div data-waveform></div>
+          <div data-audio-export></div>
+          <div class="cg-actions"><button data-view="edit">Back to notes</button><button data-action="print-score">Print / Save PDF</button></div>
+        </div>
+
+        <section data-pane="creator" class="cg-work-panel" hidden>
+          <h2>Develop an idea</h2>
+          <label class="cg-field">Project name<input data-title-input maxlength="80"></label>
+          <div class="cg-actions">
+            <label>Style <select data-create-style><option value="pop">Pop</option><option value="rock">Rock</option><option value="dance">Dance</option><option value="ambient">Ambient</option></select></label>
+            <label>Part <select data-create-kind><option value="harmony">Harmony</option><option value="drums">Drums</option><option value="instrument">Instrumental</option></select></label>
+            <label>Section <select data-section-select></select></label>
+            <button class="cg-main" data-action="create-candidates">Create three ideas</button>
+          </div>
+          <p class="cg-sub">Uses the selected track and section. Local ideas use editable notes.</p>
+        </section>
+        <section data-pane="results" class="cg-work-panel" hidden>
+          <h2>Compare ideas</h2>
+          <p class="cg-sub">Audition each idea over the existing arrangement.</p>
+          <div class="cg-candidate-grid" data-candidates></div>
+          <div class="cg-actions"><button data-action="preview-original">Play original</button><button data-view="creator">Change settings</button></div>
+        </section>
+        <section data-pane="lyrics" class="cg-work-panel" hidden>
+          <h2>Lyrics</h2>
+          <label class="cg-field">Section<select data-section-select></select></label>
+          <label class="cg-field">Words<textarea data-lyrics rows="10" maxlength="10000"></textarea></label>
+          <button data-action="play-section">Play section</button>
+        </section>
+        <section data-pane="producer" class="cg-work-panel" hidden>
+          <h2>Producer</h2>
+          <label class="cg-field">Production brief<textarea data-producer-brief rows="4" maxlength="2000" placeholder="What would you like to change?"></textarea></label>
+          <div class="cg-actions">
+            <button data-action="propose-drums">Suggest a drum part</button><button data-action="propose-harmony">Suggest harmony</button><button data-action="propose-instrument">Suggest an instrument part</button>
+          </div>
+          <p class="cg-sub">Each suggestion creates a separate editable track when you apply it.</p>
+        </section>
+        <section data-pane="voice" class="cg-work-panel" hidden>
+          <h2>Voice Studio</h2>
+          <p class="cg-sub" data-voice-status></p>
+          <div class="cg-actions"><button data-action="play-original-voice">Play original take</button><button data-action="play-vocal">Play tuned take</button><button data-action="export-vocal">Download tuned WAV</button><button data-view="capture">Record another take</button></div>
+          <div data-waveform></div>
+        </section>
+        <section data-pane="mixer" class="cg-work-panel" hidden>
+          <h2>Mixer</h2>
+          <div class="cg-mixer" data-mixer></div>
+        </section>
+        <section data-pane="library" class="cg-work-panel" hidden>
+          <h2>Library</h2>
+          <div class="cg-actions"><button data-action="new-project">New blank project</button><button data-action="save-project-file">Download project</button><button data-action="open-project">Open project file</button></div>
+          <div class="cg-actions"><label>Version name <input data-version-name maxlength="80" placeholder="Original chorus"></label><button data-action="save-version">Save version</button></div>
+          <label class="cg-field">Search saved versions<input data-version-search type="search"></label>
+          <div data-version-list></div>
+        </section>
+        <section data-pane="export" class="cg-work-panel" hidden>
+          <h2>Export</h2>
+          <div class="cg-actions" data-audio-export>
+            <button data-action="export-wav">Download mix WAV</button><button data-action="export-track-wav">Download selected track WAV</button>
+            <button data-action="export-midi">Download MIDI</button><button data-action="export-score">Download MusicXML</button>
+            <button data-action="export-lyrics">Download lyrics</button><button data-action="save-project-file">Download project</button>
+            <p class="cg-caption" data-export-details role="status"></p>
+          </div>
+        </section>
+      </div>
+      </div>
+      <footer data-arrangement></footer>
+    </div>
+</div>
+</body>
+</html>

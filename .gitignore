@@ -1,0 +1,23 @@
+# Dependencies and generated outputs
+node_modules/
+dist/
+build/
+coverage/
+__pycache__/
+*.log
+
+# Local settings and credentials
+.env
+.env.*
+!.env.example
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Personal music projects and recordings
+*.cgai
+*.wav
+*.mp3
+*.webm
+*.m4a
